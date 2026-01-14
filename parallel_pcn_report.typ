@@ -340,13 +340,15 @@ Ensemble variance provides a natural uncertainty estimate. @fig:variance shows m
 
 == Principal Findings
 
-Three key findings emerge:
+Four key findings emerge:
 
 *1. Ensemble benefits are substantial.* MIXED diversity maintains 49.8% accuracy at $sigma=0.5$ vs. 38.7% for single PCNs—a 28.7% relative gain representing qualitative differences in usability.
 
 *2. Diversity sources differ dramatically.* Architecture and initialisation diversity contribute meaningfully (+4.7%, +6.0%), whilst dynamics alone contributes nothing (\~0%). This suggests functional and sampling diversity are critical; temporal diversity insufficient.
 
 *3. Mechanisms combine synergistically.* MIXED outperforms additive expectations, indicating diversity across multiple dimensions produces maximally independent errors.
+
+*4. Uncertainty is calibrated.* Ensemble variance increases 22-fold from clean to maximum corruption (0.0026→0.058), providing a reliable confidence signal—the ensemble "knows when it doesn't know."
 
 == Interpretation: Why Does Diversity Help?
 
@@ -357,6 +359,8 @@ Ensemble learning theory explains the results @Dietterich2000EnsembleNets: indep
 - *Dynamics diversity fails* because temporal differences (fast/slow settling) don't translate to prediction differences when weights and architecture are identical. The path differs, but the destination remains similar.
 
 This suggests final inference states matter more than trajectories—models with varied speeds converge to similar solutions when constrained by identical weights and structure.
+
+The variance results reveal a fundamental property of PCN inference: when inputs are corrupted, the iterative settling process becomes increasingly sensitive to initial conditions and architectural constraints. Diverse models explore different regions of the energy landscape, and corrupted inputs create flatter, more ambiguous energy surfaces with multiple plausible local minima. The 22-fold variance increase indicates that PCNs naturally expose uncertainty through their settling dynamics—no explicit probabilistic machinery is required. This contrasts with feedforward networks, where uncertainty typically requires auxiliary mechanisms (dropout, Bayesian approximations). In PCNs, uncertainty emerges organically from the distributed, recurrent inference process itself.
 
 == Biological Implications
 
